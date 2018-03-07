@@ -10,4 +10,4 @@ for v in valLog:
             x = v and a or b
             z = a if v else b
             if not(x==y)or not(y==z):
-                print "v:", v, "a:", a, "b:", b, y, x, z
+                print ("v:", v, "a:", a, "b:", b, y, x, z)
