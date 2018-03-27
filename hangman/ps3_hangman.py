@@ -47,8 +47,9 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     # FILL IN YOUR CODE HERE...
+    "".join(set(secretWord))
     letters_guessed = (''.join(lettersGuessed))
-    return secretWord == letters_guessed
+    return len(secretWord) == len(letters_guessed)
 
 
 
@@ -66,6 +67,7 @@ def getGuessedWord(secretWord, lettersGuessed):
 # print in the same raw
         else:
             print('_', end=' ')
+    return ''
 
 
 
@@ -80,6 +82,7 @@ def getAvailableLetters(lettersGuessed):
     for i in alfabet:
         if i not in lettersGuessed:
             print(i, end=' ')
+    return ''
 
 def hangman(secretWord):
     '''
@@ -117,13 +120,16 @@ def hangman(secretWord):
                 i = i + 1
             l.append(letter)
             print(getGuessedWord(secretWord, lista))
-            print("letters available: {}".format(getAvailableLetters(l)))
+            print("letters available: ")
+            print(getAvailableLetters(l))
+            if i == 9:
+                print("you are hang! Try again")
+                print("secret word was: " + secretWord)
 
         else:
-            print("You win")
+            print("You win!")
             break
-        if i == 9:
-            print("you are hang")
+
 
 
 
