@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 import random
 import os
 from draw import *
@@ -6,8 +7,9 @@ t1 = Turtle()
 t1.showturtle()
 
 WORDLIST_FILENAME = "words.txt"
+WORDLIST_POLISH = "podpalaczka.txt"
 
-def loadWords():
+def loadWords(c):
     """
     Returns a list of valid words. Words are strings of lowercase letters.
     
@@ -16,7 +18,7 @@ def loadWords():
     """
     print("Loading word list from file...")
     # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r')
+    inFile = open(c, 'r')
     # line: string
     line = inFile.readline()
     # wordlist: list of strings
@@ -32,12 +34,6 @@ def chooseWord(wordlist):
     """
     return random.choice(wordlist)
 
-# end of helper code
-# -----------------------------------
-
-# Load the list of words into the variable wordlist
-# so that it can be accessed from anywhere in the program
-wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
     '''
@@ -47,7 +43,7 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     # FILL IN YOUR CODE HERE...
-    "".join(set(secretWord))
+    secretWord = "".join(set(secretWord))
     letters_guessed = (''.join(lettersGuessed))
     return len(secretWord) == len(letters_guessed)
 
@@ -84,6 +80,19 @@ def getAvailableLetters(lettersGuessed):
             print(i, end=' ')
     return ''
 
+def getAvailablePolish(lettersGuessed):
+    '''
+    lettersGuessed: list, what letters have been guessed so far
+    returns: string, comprised of letters that represents what letters have not
+      yet been guessed.
+    '''
+    # FILL IN YOUR CODE HERE...
+    alfabet = 'aąbcćdeęfghijklłmnoópqrsśtuvwxyzżź'
+    for i in alfabet:
+        if i not in lettersGuessed:
+            print(i, end=' ')
+    return ''
+
 def hangman(secretWord):
     '''
     secretWord: string, the secret word to guess.
@@ -105,7 +114,7 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE...
-    print(" The secret Word contain {} letters".format(len(secretWord)))
+    print(" The secret Word contain {} letters/".format(len(secretWord)))
     lista = []
     l = []
     funkcje=[szu_1, szu_2, szu_3, head, body, right_arm, left_arm, left_leg, right_leg]
@@ -125,13 +134,45 @@ def hangman(secretWord):
             if i == 9:
                 print("you are hang! Try again")
                 print("secret word was: " + secretWord)
-
         else:
             print("You win!")
             break
 
 
+def hangmanpol(secretWord):
+    print("słowo posiada {} liter".format(len(secretWord)))
+    lista = []
+    l = []
+    funkcje=[szu_1, szu_2, szu_3, head, body, right_arm, left_arm, left_leg, right_leg]
+    i = 0
+    while i < 9:
+        if isWordGuessed(secretWord, lista) == False:
+            letter = input("podaj literę: ")
+            if letter in secretWord:
+                lista.append(letter)
+            else:
+                funkcje[i](t1)
+                i = i + 1
+            l.append(letter)
+            print(getGuessedWord(secretWord, lista))
+            print("dostępne litery: ")
+            print(getAvailablePolish(l))
+            if i == 9:
+                print("Zawisłeś! Spróbuj ponownie!")
+                print("tajemniczym słowem było: " + secretWord)
+        else:
+            print("Brawo wygrałeś!")
+            break
 
 
-secretWord = chooseWord(wordlist).lower()
-hangman(secretWord)
+language = input("Wybierz język polski kliknij 'p'/Choose language english press 'e': ")
+if language == 'e':
+    wordlist = loadWords(WORDLIST_FILENAME)
+    secretWord = chooseWord(wordlist).lower()
+    hangman(secretWord)
+elif language == 'p':
+    wordlist = loadWords(WORDLIST_POLISH)
+    secretWord = chooseWord(wordlist).lower()
+    hangmanpol(secretWord)
+else:
+    print("nie wybrales języka spróbuj ponownie/ Choose language again")
