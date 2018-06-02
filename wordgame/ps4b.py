@@ -100,7 +100,7 @@ def compPlayHand(hand, wordList, n):
 # Problem #6: Playing a game
 #
 #
-def playGame(wordList):
+def playGame(wordList, k=False):
     """
     Allow the user to play an arbitrary number of hands.
  
@@ -124,9 +124,35 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this when you code this function
-
+    answer = input("Enter 'n' if you wan't play a new hand, 'r' if you wan't play the last hand again or 'e' if you wan't exit the game" )
+    answers= ('e','r','n')
+    answers2 =('u','c')
+    while answer not in answers:
+        answer = input("Enter 'n' if you wan't play a new hand, 'r' if you wan't play the last hand again or 'e' if you wan't exit the game" )
+    if answer == 'n' or answer == 'r':
+        secend_answer = input("Enter 'c' if computer play the game, 'u' if user play the game" )
+        while secend_answer not in answers2:
+            secend_answer = input("Enter 'c' if computer play the game, 'u' if user play the game" )
+    if answer == 'n':
+        k = dealHand(HAND_SIZE)
+        if secend_answer == 'u':
+            playHand(k,wordList,HAND_SIZE)
+        else:
+            compPlayHand(k,wordList,HAND_SIZE)
+    elif answer == 'r':
+        if not k:
+            print("you haven't got last hand")
+            playGame(wordList)
+        else:
+            if secend_answer == 'u':
+                playHand(k,wordList,HAND_SIZE)
+            else:
+                compPlayHand(k,wordList,HAND_SIZE)
+    elif answer == 'e':
+        print('By!')
+    if answer != 'e':
+        playGame(wordList, k)
+    return k
         
 #
 # Build data structures used for entire session and play game
