@@ -9,6 +9,6 @@ text2 ='How dare you, You are so selfish'
 
 # print(re.findall(r'cost', text))
 # print(re.findall(r'^cost', text)) # on the begining of the string
-# print(re.findall(r'!$', text)) # end of the string
+print(re.findall(r'!$', text)) # end of the string
 
 print(re.findall(r'\bare\b', text2))
